@@ -125,11 +125,11 @@ cp ${SSHD_CONFIG} ${SSHD_CONFIG}.backup
 BANNER "Insert Sftp Chroot Setup Config"
 #SSHD_CONFIG에 Sftp Chroot 설정 추가 
 echo ""  >> ${SSHD_CONFIG}
-echo "Match User ${UserName} " >> ${SSHD_CONFIG}
-echo "     ChrootDirectory ${UserHome}" >> ${SSHD_CONFIG}
-echo "     ForceCommand internal-sftp" >> ${SSHD_CONFIG}
-echo "     X11Forwarding no" >> ${SSHD_CONFIG}
-echo "     AllowTCPForwarding no" >> ${SSHD_CONFIG}
+echo "#Match User ${UserName} " >> ${SSHD_CONFIG}
+echo "#     ChrootDirectory ${UserHome}" >> ${SSHD_CONFIG}
+echo "#     ForceCommand internal-sftp" >> ${SSHD_CONFIG}
+echo "#     X11Forwarding no" >> ${SSHD_CONFIG}
+echo "#     AllowTCPForwarding no" >> ${SSHD_CONFIG}
 echo ""
 echo "##CHECK CONFIG##"
 tail -6 ${SSHD_CONFIG}
