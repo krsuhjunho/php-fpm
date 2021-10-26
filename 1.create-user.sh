@@ -139,6 +139,9 @@ BANNER "Chroot Permission change Home Directory, Root Permission"
 #Chroot 사용을 위한 홈폴더 루트권한 설정
 chown root:root ${UserHome} 
 chmod 755 ${UserHome}
+
+BANNER "CHECK SSHD_CONFIG CHROOT UNCOMENT"
+BANNER "vi /etc/ssh/sshd_config"
 }
 
 WORDPRESS_SETUP()
