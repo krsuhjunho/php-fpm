@@ -52,7 +52,7 @@ echo "RequestHeader unset Proxy early" >> /etc/httpd/conf/httpd.conf
 sed -i 's/Listen 80/Listen 10080/g' /etc/httpd/conf/httpd.conf
 #Apache 내부 포트 변경 필요 NPM에서 80이랑 443 사용중
 #apache 포트 10080으로 변경 및 443 제외
-mv ssl.conf ssl.conf.bak
+mv /etc/httpd/conf.d/ssl.conf /etc/httpd/conf.d/ssl.conf.bak
 systemctl enable --now httpd
 systemctl restart httpd
 
