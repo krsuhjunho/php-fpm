@@ -1,19 +1,25 @@
 #!/bin/bash
 
 
-setenforce 0 
-yum update -y
+#--SELINUX
+setenforce 0 #-- SELINUX PER,  
+
+#--YUM UPDATE && EPEL && REMI INSTALL
+yum update -yq #-- YUM UPDATE
 rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY*
-yum install -y epel-release
+yum install -y epel-release #-- EPEL-RELEASE INSTALL
 yum -y groupinstall 'Development Tools'
 yum -y install yum-utils
 yum install -y  http://rpms.remirepo.net/enterprise/remi-release-7.rpm
-yum-config-manager --enable remi-php74
+yum-config-manager --enable remi-php74 #--PHP 7.4 SETUP
 
+#--DOCKER
 curl -fsSL https://get.docker.com -o get-docker.sh
 sh get-docker.sh
 systemctl enable --now docker
 docker ps 
+
+#--DOCKER-COMPOSE
 echo '
 #!/bin/bash 
 
@@ -29,11 +35,15 @@ sh -c "curl -L https://raw.githubusercontent.com/docker/compose/${COMPOSE_VERSIO
 docker-compose -v 
 
 exit 0' > docker-compose-latest
-chmod +x docker-compose-latest&&./docker-compose-latest
+chmod +x ./docker-compose-latest&&./docker-compose-latest
 
-docker-compose up -d
+/usr/local/bin/docker-compose up -d
+
+#--YUM PHP INSTALL
 
 yum -y install httpd mod_ssl php php-zip php-fpm php-devel php-gd php-imap php-ldap php-mysql php-odbc php-pear php-xml php-xmlrpc php-pecl-apc php-mbstring php-mcrypt php-soap php-tidy curl curl-devel perl-libwww-perl ImageMagick libxml2 libxml2-devel mod_fcgid php-cli httpd-devel php-fpm php-intl php-imagick php-pspell wget
+
+#--APACHE SETUP
 echo "RequestHeader unset Proxy early" >> /etc/httpd/conf/httpd.conf
 sed -i 's/Listen 80/Listen 10080/g' /etc/httpd/conf/httpd.conf
 #Apache 내부 포트 변경 필요 NPM에서 80이랑 443 사용중
@@ -42,8 +52,11 @@ mv ssl.conf ssl.conf.bak
 systemctl enable --now httpd
 systemctl restart httpd
 
+#--PHP INFO
 echo "<?php echo '実行中のユーザーは '.exec('whoami');  phpinfo();?>" > /var/www/html/info.php
 
+
+#--PHP-FPM SETUP
 mkdir /etc/php-fpm.d/sites-enabled
 mkdir /etc/php-fpm.d/sites-available
 
@@ -56,12 +69,12 @@ ln -s /etc/php-fpm.d/sites-available/www.conf /etc/php-fpm.d/sites-enabled/www.c
 mkdir /var/run/php-fpm
 
 sed -i 's#127.0.0.1:9000#/var/run/php-fpm/default.sock#g' /etc/php-fpm.d/sites-available/www.conf
-
 sed -i 's#;listen.owner = nobody#listen.owner = apache#g' /etc/php-fpm.d/sites-available/www.conf
 sed -i 's#;listen.group = nobody#listen.group = apache#g' /etc/php-fpm.d/sites-available/www.conf
 sed -i 's#;listen.mode = 0660#listen.mode = 0660#g' /etc/php-fpm.d/sites-available/www.conf
 sed -i 's#;php_value#php_value#g' /etc/php-fpm.d/sites-available/www.conf
 
-wget https://raw.githubusercontent.com/krsuhjunho/Php-fpm/main/default.conf
+wget -O /etc/httpd/conf.d/default.conf https://raw.githubusercontent.com/krsuhjunho/Php-fpm/main/default.conf
+systemctl restart php-fpm
 systemctl restart httpd
 
