@@ -1,47 +1,108 @@
-
+#!/bin/bash
 UserName=${1}
 UserHome=/home/${UserName}
 UserHomePublic=${UserHome}/public_html
 UserPhpSessionDir=${UserHome}/var/lib/php/session
-UserPhpAvailableConf=/etc/php-fpm.d/sites-available/${UserName}.conf
-UserPhpEnableConf=/etc/php-fpm.d/sites-enabled/${UserName}.conf 
-PhpFpmExamConf=/etc/php-fpm.d/sites-available/www.conf
-UserApacheExampleConf=/etc/httpd/conf.d/${UserName}.conf
+UserPhpAvailableDir=/etc/php-fpm.d/sites-available
+UserPhpAvailableConf=${UserPhpAvailableDir}/${UserName}.conf
+UserPhpEnableDir=/etc/php-fpm.d/sites-enabled
+UserPhpEnableConf=${UserPhpEnableDir}/${UserName}.conf 
+PhpFpmExamDir=/etc/php-fpm.d/sites-available
+PhpFpmExamConf=${PhpFpmExamDir}/www.conf
+UserApacheConfDir=/etc/httpd/conf.d
+UserApacheUserConf=${UserApacheConfDir}/${UserName}.conf
 
-echo ""
-echo "Delete User  => ${UserName}" 
-echo ""
-userdel ${UserName}
+BANNER() 
+{
+	echo ""
+    msg="# $* #"
+    edge=$(echo "$msg" | sed 's/./#/g')
+    echo "$edge"
+    echo "$msg"
+    echo "$edge"
+	echo ""
+}
 
-echo ""
-echo "Delete Home Directory => ${UserHome}" 
-echo ""
+DELETE_HOMEDIR()
+{
+BANNER "Delete Home Directory => ${UserHome}" 
+echo "rm -rf ${UserHome}"
 rm -rf ${UserHome}
+}
 
-echo ""
-echo "Delete Available Config File => ${UserPhpAvailableConf}" 
-echo ""
+DELETE_PHPAVAILABLECONF()
+{
+
+BANNER "Delete Available Config File => ${UserPhpAvailableConf}" 
+echo "rm -rf ${UserPhpAvailableConf}"
 rm -rf ${UserPhpAvailableConf}
+echo ""
+ls -ahl ${UserPhpAvailableDir}
+}
 
-echo ""
-echo "Delete Enable Config File => ${UserPhpEnableConf}" 
-echo ""
+DELETE_PHPENABLECONF()
+{
+BANNER "Delete Enable Config File => ${UserPhpEnableConf}" 
+echo "rm -rf ${UserPhpEnableConf}"
 rm -rf ${UserPhpEnableConf}
-
-
 echo ""
-echo "Delete Apache Config File  => ${UserApacheExampleConf}" 
+ls -ahl ${UserPhpEnableDir}
+}
+
+
+DELETE_APACHEEXAMPLECONF()
+{
+BANNER "Delete Apache Config File  => ${UserApacheUserConf}" 
+echo "rm -rf ${UserApacheUserConf}"
+rm -rf ${UserApacheUserConf}
 echo ""
-rm -rf ${UserApacheExampleConf}
+ls -ahl ${UserApacheConfDir}
+}
 
 
+SYSTEMCTL_RELOAD()
+{
+BANNER "PHP-FPM RELOAD"
+systemctl reload php-fpm
 
+ps ax | grep php-fpm
+
+BANNER "APACHE CONFIG TEST && GRACEFUL"
 apachectl configtest
 
 apachectl graceful
 
 systemctl status httpd
 
-systemctl restart php-fpm
+}
 
-ps ax | grep php-fpm
+
+USERDEL()
+{
+BANNER "Delete User  => ${UserName}" 
+echo "userdel ${UserName}"
+userdel ${UserName}
+}
+
+CHECK_CHROOT_SSHD()
+{
+BANNER "CHECK_CHROOT_SSHD"
+echo ""
+echo "vi /etc/ssh/sshd_config"
+echo ""
+echo "Delete Chroot Setup ${UserName}"
+echo ""
+}
+
+MAIN()
+{
+DELETE_HOMEDIR
+DELETE_PHPAVAILABLECONF
+DELETE_PHPENABLECONF
+DELETE_APACHEEXAMPLECONF
+SYSTEMCTL_RELOAD
+USERDEL
+CHECK_CHROOT_SSHD
+}
+
+MAIN
