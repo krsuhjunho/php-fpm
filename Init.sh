@@ -39,6 +39,10 @@ chmod +x ./docker-compose-latest&&./docker-compose-latest
 
 /usr/local/bin/docker-compose up -d
 
+cd mysql 
+
+/usr/local/bin/docker-compose up -d
+
 #--YUM PHP INSTALL
 
 yum -y install httpd mod_ssl php php-zip php-fpm php-devel php-gd php-imap php-ldap php-mysql php-odbc php-pear php-xml php-xmlrpc php-pecl-apc php-mbstring php-mcrypt php-soap php-tidy curl curl-devel perl-libwww-perl ImageMagick libxml2 libxml2-devel mod_fcgid php-cli httpd-devel php-fpm php-intl php-imagick php-pspell wget
@@ -78,3 +82,6 @@ wget -O /etc/httpd/conf.d/default.conf https://raw.githubusercontent.com/krsuhju
 systemctl restart php-fpm
 systemctl restart httpd
 
+cd /home
+wget https://ko.wordpress.org/latest-ko_KR.tar.gz
+tar -zxvf latest-ko_KR.tar.gz
