@@ -167,6 +167,7 @@ find ${UserHomePublic} -type f -exec chmod 0664 {} \;
 
 MAIN()
 {
+USERCHECK
 USERADD
 PHP-FPM_SETUP
 APACHE_SETUP
