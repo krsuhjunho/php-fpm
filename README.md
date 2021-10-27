@@ -1,3 +1,3 @@
 # Php-fpm
 
-yum install -y git && git clone https://github.com/krsuhjunho/Php-fpm.git && cd Php-fpm&& ./Init.sh 
+yum install -y git && git clone https://github.com/krsuhjunho/php-fpm.git && cd php-fpm&& ./Init.sh 
