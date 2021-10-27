@@ -67,6 +67,12 @@ yum -y install  httpd \
 				php-pspell \
 				wget
 }
+DOCKER_PS()
+{
+BANNER "DOCEKR PROCESS CHECK"
+#-- DOCKER Process Check
+docker ps 
+}
 
 #-- DOCKER INSTALL
 DOCKER_INSTALL()
@@ -79,9 +85,7 @@ sh get-docker.sh
 
 systemctl enable --now docker
 
-BANNER "DOCEKR PROCESS CHECK"
-#-- DOCKER Process Check
-docker ps 
+DOCKER_PS
 
 #--DOCKER-COMPOSE
 
@@ -207,6 +211,7 @@ DOCKER_INSTALL
 APACHE_SETUP
 PHP_FPM_SETUP
 WORDPRESS_LATEST_DOWNLOAD
+
 }
 
 MAIN
