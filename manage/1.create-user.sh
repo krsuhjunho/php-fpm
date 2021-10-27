@@ -96,7 +96,7 @@ APACHE_SETUP()
 {
 BANNER "Download Example.conf From Git"
 #기본 Apache Conf 파일 다운로드 및 설정 
-wget -O ${UserApacheExampleConf} https://raw.githubusercontent.com/krsuhjunho/Php-fpm/main/example.conf
+wget -O ${UserApacheExampleConf} https://raw.githubusercontent.com/krsuhjunho/php-fpm/main/conf.d/example.conf
 
 BANNER "Change Example.com to UserDomain"
 #유저 이름 기반으로 도메인 설정 기본 유저 도메인 및 www 포함
