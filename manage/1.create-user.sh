@@ -30,6 +30,17 @@ BANNER()
 	echo ""
 }
 
+USERCHECK()
+{
+BANNER "Check User Exist"
+if [ -d "$UserHome" ]; then
+  # Take action if $UserHome exists. #
+  echo "User Exist, Exit UserAdd Process"
+  echo "Please Check UserName"
+  exit;
+fi
+}
+
 USERADD()
 {
 BANNER "UserAdd => ${UserName}"
@@ -156,6 +167,7 @@ find ${UserHomePublic} -type f -exec chmod 0664 {} \;
 
 MAIN()
 {
+USERCHECK
 USERADD
 PHP-FPM_SETUP
 APACHE_SETUP
