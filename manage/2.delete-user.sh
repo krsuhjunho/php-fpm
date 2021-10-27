@@ -27,9 +27,10 @@ USERCHECK()
 {
 BANNER "Check User Exist"
 if [ -d "$UserHome" ]; then
-  # Take action if $UserHome exists. #
+  # Take action if $UserHome exist. #
   echo "User Exist, Delete ${UserName}"
 else  
+  BANNER "${UserName} is Not exist"
   exit;
 fi
 }
