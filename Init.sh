@@ -105,14 +105,16 @@ chmod +x ./docker-compose-latest&&./docker-compose-latest
 
 BANNER "MKDIR DOCKER DIRECTORY"
 mkdir /docker/
+cp -R mysql /docker/
+cp -R npm /docker/
 
 BANNER "COPY NPM DOCKER COMPOSE"
-cp -R npm /docker/
+
 cd /docker/npm
 /usr/local/bin/docker-compose up -d
 
 BANNER "COPY MYSQL DOCKER COMPOSE"
-cp -R mysql /docker/
+
 cd /docker/mysql 
 /usr/local/bin/docker-compose up -d
 
