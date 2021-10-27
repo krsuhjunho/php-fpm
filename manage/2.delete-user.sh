@@ -79,8 +79,8 @@ systemctl status httpd
 USERMAILBOX_DEL()
 {
 BANNER "Delete User Mailbox  => ${UserName}" 
-echo "rm -rf /var/spool/mail"
-rm -rf /var/spool/mail
+echo "rm -rf /var/spool/mail/${UserName}""
+rm -rf /var/spool/mail/${UserName}"
 }
 
 USERDEL()
