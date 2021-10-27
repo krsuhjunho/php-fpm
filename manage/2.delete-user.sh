@@ -23,6 +23,17 @@ BANNER()
 	echo ""
 }
 
+USERCHECK()
+{
+BANNER "Check User Exist"
+if [ -d "$UserHome" ]; then
+  # Take action if $UserHome exists. #
+  echo "User Exist, Delete ${UserName}"
+else  
+  exit;
+fi
+}
+
 DELETE_HOMEDIR()
 {
 BANNER "Delete Home Directory => ${UserHome}" 
@@ -102,6 +113,7 @@ echo ""
 
 MAIN()
 {
+USERCHECK
 DELETE_HOMEDIR
 DELETE_PHPAVAILABLECONF
 DELETE_PHPENABLECONF
