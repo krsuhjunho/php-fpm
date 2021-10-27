@@ -178,7 +178,7 @@ sed -i 's#;listen.mode = 0660#listen.mode = 0660#g' /etc/php-fpm.d/sites-availab
 sed -i 's#;php_value#php_value#g' /etc/php-fpm.d/sites-available/www.conf
 
 BANNER "APACHE PHP-FPM CONF DOWNLOAD"
-wget -O /etc/httpd/conf.d/default.conf https://raw.githubusercontent.com/krsuhjunho/Php-fpm/main/default.conf
+wget -O /etc/httpd/conf.d/default.conf https://raw.githubusercontent.com/krsuhjunho/php-fpm/main/conf.d/default.conf
 
 BANNER "PHP-FPM STATUS CHECK"
 systemctl restart php-fpm
@@ -194,7 +194,7 @@ WORDPRESS_LATEST_DOWNLOAD()
 {
 cd /home
 wget https://ko.wordpress.org/latest-ko_KR.tar.gz
-tar -zxvf latest-ko_KR.tar.gz
+tar -zxf latest-ko_KR.tar.gz
 }
 
 MAIN()
