@@ -97,7 +97,7 @@ sh -c "curl -L https://github.com/docker/compose/releases/download/${COMPOSE_VER
 chmod +x /usr/local/bin/docker-compose 
 
 # Output compose version 
-/usr/local/bin/docker-compose/docker-compose -v 
+/usr/local/bin/docker-compose -v 
 
 exit 0' > docker-compose-latest
 chmod +x ./docker-compose-latest&&./docker-compose-latest
