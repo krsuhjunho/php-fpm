@@ -16,6 +16,7 @@ SELINUX_PERMISSIVE()
 {
 BANNER "SELINUX_PERMISSIVE"
 setenforce 0	#-- SELINUX permissive  
+sed -i -e "s/^SELINUX=enforcing$/SELINUX=disabled/g" /etc/selinux/config
 }
 
 #-- YUM UPDATE && EPEL && REMI INSTALL && PHP 7.4 SETUP
